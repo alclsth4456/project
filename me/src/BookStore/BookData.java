@@ -6,8 +6,11 @@ import java.util.Map;
 public class BookData {
 
 	public static Map<String, BookStoreDto> blist = 
-		new HashMap<>();
-	
+		new HashMap<String, BookStoreDto>();
+
+	public BookData() {
+		
+	}
 	public static void setblist() {
 blist.put("자바의 정석", new BookStoreDto(1,"자바의 정석","남궁성","한빛",35000));
 blist.put("오라클", new BookStoreDto(2,"오라클 정석","홍길동","나무",35000));

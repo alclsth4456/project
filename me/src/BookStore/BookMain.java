@@ -11,6 +11,7 @@ import Book_Member.MemberSet;
 public class BookMain {
 	;
 	public void bookView() {
+		BookData.setblist();
 		 Set<String> keylist = BookData.blist.keySet();
 		 Iterator<String> it = keylist.iterator();
 		 while(it.hasNext()) {

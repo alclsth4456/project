@@ -14,13 +14,13 @@ public class BookStoreSet {
 	private static int lastbookno = 0;
 	Book_Member.MemberDto mdto= new  MemberDto();
 	BookStoreDto dto = new BookStoreDto();
-	 Map<String, BookStoreDto> blist = 
-				new HashMap<>();
+//	 Map<String, BookStoreDto> blist = 
+//				new HashMap<>();
 	 Map<String, MemberDto> mlist = new HashMap<>();
 Scanner sc = new Scanner(System.in);
 
 
-	void bookinsert() {
+	public void bookinsert() {
 		
 //	Set<String> keylist = BookData.blist.keySet();
 //	Iterator<String>it = keylist.iterator();
@@ -38,11 +38,11 @@ Scanner sc = new Scanner(System.in);
 		System.out.println("도서 금액");
 		int bookprice = sc.nextInt();
 		sc.nextLine();
-		
+		dto.setBookName(bookName);
 		dto.setBookWriter(bookwriter);
 		dto.setBookpublish(bookpublish);
 		dto.setBookprice(bookprice);
-		BookStoreDto dto = blist.put(bookName, new BookStoreDto(bookno,bookName,bookwriter
+		BookStoreDto dto = BookData.blist.put(bookName, new BookStoreDto(bookno,bookName,bookwriter
 				,bookpublish,bookprice));
 		System.out.println("회원 정보가 저장되었습니다.");
 		}
@@ -72,7 +72,7 @@ Scanner sc = new Scanner(System.in);
 			dto.setBookprice(bookprice);
 			dto.setBookNo(bookno);
 			
-			blist.put(bookname, new BookStoreDto(bookno,bookname,bookwriter,
+			BookData.blist.put(bookname, new BookStoreDto(bookno,bookname,bookwriter,
 					bookpublish,bookprice));
 			System.out.println("해당 도서가 수정 완료되었습니다.");
 		}
@@ -84,9 +84,9 @@ Scanner sc = new Scanner(System.in);
 		if(dto==null) {
 			System.out.println("해당 도서는 존재하지 않습니다.");
 		}else {
-			blist.remove(dto);
+			BookData.blist.remove(bookname);
 			System.out.println("해당 도서가 삭제되었습니다.");
-			
+			System.out.println();
 		}
 	}
 	void memberinsert() {
@@ -137,6 +137,7 @@ Scanner sc = new Scanner(System.in);
 			MemberDto dto = MemberData.mlist.get(it.next());
 			System.out.printf("%s\t%s\t%s\t%d", dto.getMemberName(),dto.getMemberPhone(),
 					dto.getMemberId(),dto.getCharge());
+			System.out.println();
 		}
 	}
 	

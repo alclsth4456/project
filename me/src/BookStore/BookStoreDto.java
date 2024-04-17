@@ -42,7 +42,7 @@ public class BookStoreDto {
 		this.bookName = bookName;
 		this.bookWriter = bookWriter;
 		this.bookpublish = bookpublish;
-		this.bookNo = ++lastbookno;
+		this.bookNo = bookNo;
 		this.bookprice = bookprice;
 	}
 	public static int getLastbookno() {
