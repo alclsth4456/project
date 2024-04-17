@@ -6,6 +6,7 @@ public class MemberDto {
 	private String memberPhone;
 	private int charge;
 	private String memberId;
+	private int bookNo;
 	
 	public String getMemberName() {
 		return memberName;

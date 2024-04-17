@@ -7,6 +7,7 @@ public class BookStoreDto {
 	private String bookpublish;
 	private int bookNo;
 	private int bookprice;
+	private static int lastbookno = 0;
 	public String getBookName() {
 		return bookName;
 	}
@@ -41,8 +42,14 @@ public class BookStoreDto {
 		this.bookName = bookName;
 		this.bookWriter = bookWriter;
 		this.bookpublish = bookpublish;
-		this.bookNo = bookNo;
+		this.bookNo = ++lastbookno;
 		this.bookprice = bookprice;
+	}
+	public static int getLastbookno() {
+		return lastbookno;
+	}
+	public static void setLastbookno(int lastbookno) {
+		BookStoreDto.lastbookno = lastbookno;
 	}
 	public BookStoreDto() {
 		// TODO Auto-generated constructor stub
@@ -52,7 +59,9 @@ public class BookStoreDto {
 		return "BookStoreDto [bookName=" + bookName + ", bookWriter=" + bookWriter + ", bookpublish=" + bookpublish
 				+ ", bookNo=" + bookNo + ", bookprice=" + bookprice + "]";
 	}
-	
+	public static int getLastBookNo() {
+		return lastbookno;
+	}
 	
 	
 	

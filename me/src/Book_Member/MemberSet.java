@@ -25,12 +25,12 @@ Scanner sc = new Scanner(System.in);
 			System.out.println("해당 도서는 존재하지 않습니다.");
 		}else {
 		int money = mdto.getCharge();
-		int total = dto.getBookprice()-mdto.getCharge();
+		int total = mdto.getCharge()-bdto.getBookprice();
 			if(total< 0) {
 				System.out.println("금액이 부족합니다.");
 			}else {
 				mdto.setCharge(total);
-				System.out.println(dto.getBookName()+ "의 구매가 확정되었습니다.");
+				System.out.println(bdto.getBookName()+ "의 도서가 확정되었습니다.");
 			}
 		}
 		}
@@ -54,8 +54,10 @@ Scanner sc = new Scanner(System.in);
 		}else {
 			System.out.println("충전하실 금액");
 			int charge = sc.nextInt();
-			int total = dto.getCharge() + charge;
-			System.out.println("회원님의 잔액은" +total +"원 입니다.");
+			int total = dto.getCharge()+ charge;
+			dto.setCharge(total);
+			System.out.println("회원님의 잔액은" +dto.getCharge() +"원 입니다.");
+			sc.nextLine();
 		}
 
 	}
@@ -76,7 +78,18 @@ Scanner sc = new Scanner(System.in);
 		
 	}
 	}
-	
+	public void memberview() {
+		System.out.println("조회하실 회원명");
+		String membername = sc.nextLine();
+		MemberDto dto = MemberData.mlist.get(membername);
+		if(dto==null) {
+			System.out.println("이 회원님은 존재하지 않습니다.");
+		}else {
+			System.out.printf("%s\t%s\t%s\t%d",dto.getMemberName(),dto.getMemberPhone(),
+		dto.getCharge(),dto.getCharge());
+			System.out.println();
+		}
+	}
 	
 	
 	
