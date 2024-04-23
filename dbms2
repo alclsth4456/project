@@ -123,6 +123,14 @@ having count(distinct b.publisher)>=2;
 
 --전체 고객의 30%이상이 구매한 도서
 select bookname
+from book b join orders o on b.bookid= o.bookid
+where o.bookid in (select b2.bookid from book b2 join orders o2 on b2.booid=o2.bookid
+group by b2.bookid
+having count(distinct o2.custid) >= (select 0.3* count(*) from 
+customer);
+
+
+select bookname
 from book b1
 where ((select count(b2.bookid)
 from book b2,orders o where b.bookid= o.bookid
