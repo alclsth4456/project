@@ -1,0 +1,217 @@
+--박지성의 총구매액
+select sum(saleprice)
+from orders,customer
+where orders.custid=customer.custid
+and customer.name like '박지성';
+
+select sum(saleprice)
+from orders
+where custid=1;
+--박지성이 구매한 도서의 수
+select count(*)
+from orders
+where custid=1;
+
+select count(*)
+from customer c,orders o
+where c.custid= o.custid
+and c.name like '박지성';
+
+--박지성이 구매한 도서의 출반사 수
+select count(publisher) 
+from book
+where bookid in (select bookid from orders where custid=1);
+
+select count(distinct publisher)
+from  customer c, orders o, book b
+where c.custid= o.custid and o.bookid=b.bookid
+and c.name like '박지성';
+
+--박지성이 구매한 도서의 이름,가격,정가와,판매가격의 차이
+select bookname,price,(price - saleprice)
+from orders,book
+where orders.custid=1 and book.bookid=orders.custid
+and orders.bookid= customer.custid;
+
+select bookname,price, price-saleprice
+from customer c,orders o,book b
+where c.custid =o.custid
+and o.bookid=b.bookid and c.name like '박지성';
+
+--박지성이 구매하지 않은 도서의 이름
+select distinct bookname
+from orders,book,customer
+where book.bookid=orders.custid and orders.custid not in 1;
+
+select distinct b.bookname
+from book b, orders o,customer c
+where b.bookid=o.bookid
+and c.custid=o.custid
+and c.name !='박지성';
+
+--고객의 이름과 고객별 구매액
+select distinct customer.name , orders.saleprice
+from customer,orders,book
+where customer.custid= orders.custid;
+
+select name, sum(saleprice)
+from orders o,customer c
+where o.custid=c.custid 
+group by name;
+
+select *
+from orders, customer
+where o.custid= c.custid;
+--고객의 이름과 고객이 구매한 도서목록
+select name,bookname
+from customer,orders,book
+where customer.custid=orders.custid and orders.bookid=book.bookid;
+
+select c.name,b.bookname
+from book b,orders o, customer c
+where b.bookid= o.bookid
+and o.custid= c.custid;
+
+--도서 가격과 판매가격의 차이가 가장 많은 주문
+select bookname,price-saleprice
+from orders,book
+where orders.bookid= book.bookid;
+
+select *
+from book b,orders o
+where b.bookid=o.bookid
+and price -saleprice=(select max(price-saleprice)
+from book b, orders o
+where b.bookid= o.bookid);
+
+--도서의 판매액 평균보다 자신의 구매액 평균이 더높은 고객의이름
+select name,avg(saleprice)
+from customer c, orders o
+where c.custid =o.custid
+group by name
+having avg(saleprice) > (select avg(saleprice)
+from orders);--도서의 판매액 평균
+--박지성이 구매한 도서의 출판사와 같은 출판사에서 도서를 구매한 고객의 이름
+select name
+from customer c, orders o, book b
+where c.custid=o.custid and o.bookid=b.bookid
+and name not like '박지성'
+and publisher in(select b.publisher from customer c,orders o, book b
+where c.custid=o.custid and o.bookid=b.bookid
+and name like '박지성');
+
+--두개이상의 서로 다른 출판사에서 도서를 구매한 고객의 이름
+select c.name,count(b.publisher)
+from customer c,orders o,book b
+where c.custid=o.custid
+and b.bookid=o.bookid
+group by name
+having count(distinct b.publisher)>=2;
+
+--전체 고객의 30%이상이 구매한 도서
+select bookname
+from book b1
+where ((select count(b2.bookid)
+from book b2,orders o where b.bookid= o.bookid
+and b1.bookid=b2.bookid)
+>=0.3*(select count(*) from customer)
+);
+select count(*) from customer;
+-----------------------------------------------
+--제약조건
+--영화 가격은 20000원을 넘지않아야한다.
+--상영관번호는 1~10사이이다.
+--같은사람이 같은 좌석번호를 두번 예약하지 않아야한다.
+
+--극장데이터 베이스
+drop table moviebox;
+CREATE TABLE moviebox(
+movieno number, -- 극장번호
+moviename varchar2(30),
+station varchar2(30),
+PRIMARY KEY(movieno)
+);
+--상영관 테이블
+
+CREATE TABLE cinema(
+MOVIENO NUMBER, --극장번호
+SHOWNO NUMBER, --상영관번호
+TITLE VARCHAR2(30),
+PRICE NUMBER,
+SITCOUNT NUMBER,
+price number check(price <20000),
+PRIMARY KEY (movieno,showno));
+
+--ALTER TABLE MOVIESTATION MODIFY PRICE (price<= 20000);
+ALTER TABLE MOVIESTATION MODIFY (SHOWNO >= 1, SHOWNO>=10);
+
+--고객 테이블
+
+CREATE TABLE MCUSTOMER(
+CUSTNO NUMBER,
+NAME VARCHAR2(30),
+ADDRESS VARCHAR2(30),
+PRIMARY KEY (CUSTNO));
+
+--예약 테이블
+CREATE TABLE RESERVATION(
+MOVIENO NUMBER,
+SHOWNO NUMBER check(showno>=1) check(showno<=10),
+CUSTNO NUMBER,
+SITNO NUMBER,
+rdate date,
+PRIMARY KEY (MOVIENO,SHOWNO,CUSTNO));
+
+--ALTER TABLE RESERVATION CUSTNO.SITNO!=2;
+
+--판매원 데이터베이스
+CREATE TABLE SALESPERSON(
+NAME VARCHAR2(30) PRIMARY KEY,
+AGE NUMBER,
+SALARY VARCHAR2(30));
+ 
+--주문 테이블
+CREATE TABLE MOVIEORDER(
+NUMBER1 NUMBER,
+CUSTNAME VARCHAR2(30),
+SALESPERSON VARCHAR2(30),
+AMOUNT NUMBER,
+PRIMARY KEY (CUSTNAME, SALESPERSON),
+FOREIGN KEY(CUSTNAME) REFERENCES NUMBER1(NAME),
+FOREIGN KEY(SALESPERSON) REFERENCES SALESPERSON(NAME));
+--고객 테이블
+CREATE TABLE CUSTOMER(
+NAME VARCHAR2(50)PRIMARY KEY,
+CITY VARCHAR2(50),
+INDUSTRYTYPE VARCHAR2(50)
+ );
+--기업 프로젝트 데이터베이스
+CREATE TABLE EMPLOYEE(
+EMPNO NUMBER PRIMARY KEY,
+NAME VARCHAR2(50),
+PHONENO VARCHAR2(20),
+ADDRESS VARCHAR2(100),
+SEX CHAR(1),
+POSITION VARCHAR2(50),
+DEPTNO NUMBER
+);
+--부서테이블 
+CREATE TABLE DEPARTMENT(
+DEPTNO NUMBER PRIMARY KEY,
+DEPTNAME VARCHAR2(50),
+MANAGER VARCHAR2(10)
+);
+CREATE TABLE PROJECT(
+PROJNO NUMBER PRIMARY KEY,
+PROJNAME VARCHAR(40),
+DEPTNO NUMBER
+);
+--작업 테이블 
+CREATE TABLE WORKS(
+EMPNO NUMBER,
+PROJNO NUMBER,
+HOURS_WORKED NUMBER,
+PRIMARY KEY(EMPNO,PROJNO),
+FOREIGN KEY(EMPNO)REFERENCES EMPLOYEE(EMPNO),
+FOREIGN KEY(EMPNO) REFERENCES EMPLOYEE(PROJNO)
+);
