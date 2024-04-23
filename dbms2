@@ -73,9 +73,12 @@ where b.bookid= o.bookid
 and o.custid= c.custid;
 
 --도서 가격과 판매가격의 차이가 가장 많은 주문
-select bookname,price-saleprice
-from orders,book
-where orders.bookid= book.bookid;
+select *
+from orders o, book b
+where o.bookid= b.bookid
+and price-saleprice in (select max(price-saleprice) from orders o, book b     --내 답
+where o.bookid=b.bookid);
+
 
 select *
 from book b,orders o
@@ -85,6 +88,11 @@ from book b, orders o
 where b.bookid= o.bookid);
 
 --도서의 판매액 평균보다 자신의 구매액 평균이 더높은 고객의이름
+select customer.name,avg(saleprice)
+from customer c, orders o
+where avg(saleprice)>(select avg(saleprice) from orders);          --내 답
+
+
 select name,avg(saleprice)
 from customer c, orders o
 where c.custid =o.custid
@@ -92,6 +100,11 @@ group by name
 having avg(saleprice) > (select avg(saleprice)
 from orders);--도서의 판매액 평균
 --박지성이 구매한 도서의 출판사와 같은 출판사에서 도서를 구매한 고객의 이름
+select customer.name
+from orders where bookid in (select bookid from book where publisher           --내 답
+=(select publisher from book where custid=1);
+
+
 select name
 from customer c, orders o, book b
 where c.custid=o.custid and o.bookid=b.bookid
