@@ -88,16 +88,12 @@ group by deptno
 order by avg(sal) desc;
 
 select deptno
-from deptno(select deptno,avg(sal) from emp1 
+ from emp1 
+FROM (SELECT deptno,avg(sal) FROM emp1
 group by deptno 
 order by avg(sal)desc) 
 where rownum=1;
 
-select deptno
-from emp1
-group by deptno
-having avg(sal)=(select max(sal) from (select avg(sal)
-from emp1 group by deptno));
 --세일즈맨을 제외하고 각 업무별 사원의 총급여가 3000이상인 각 
 --업무에 대해 업무명과 각 업무별 평균 급여를 출력, 평균 급여의 내림차순으로 출력
 select job as "업무명",round(avg(sal)) as "평균 급여"
