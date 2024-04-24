@@ -18,20 +18,7 @@ deptno number(2),
 PRIMARY key(empno),
 foreign key(deptno) references dept(deptno));
 
-insert into emp1
-values(1, '김사원','백엔드',1,'20200505',3000,500,1);
-insert into emp1
-values(2, '김사원2','프론트',1,'20200506',2500,300,1);
-insert into emp1
-values(3, '김사원3','데스크',1,'20200507',2200,500,2);
-insert into emp1
-values(4, '김사원s','마케팅',1,'20200508',3200,500,2);
-insert into emp1
-values(5, '김사원4','마케팅',1,'20200508',3200,500,30);
-insert into emp1
-values(6, 's김사원','사설업체',1,'20200508',3500,500,30);
- insert into emp1
-values(7, 's김사원5','사설업체',1,'20200508',3500,500,30);
+
    
 --사원의 이름과 업무를 출력하시오 단 사원의 이름은 '사원이름' 업무는 '사원업무'
 --머리글이 나오도록 출력
