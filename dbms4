@@ -108,8 +108,16 @@ and sum(sal)>=3000
 order by round(avg(sal)) desc;
 --전체 사원 가운데 직속상관이 있는 사원의 수를 출력
 select count(*)
-from 
+from emp1;
+where mgr not in null;
 --emp테이블에서 이름,급여,커미션금액,총액(sal*12+comm)을 구하여 총액이 많은 순서대로
 --출력, 커미션이 null인 사람은 제외
+select ename,sal,comm,sal*12+comm
+from emp1
+where comm not in null
+order by sal*12+comm desc;
 
 --각 부서별로 같은 업무를 하는 사람의 인원수를 출력
+select count(*) as "인원수", job as "업무 이름", deptno as "부서번호"
+from emp1 
+group by job,deptno;
