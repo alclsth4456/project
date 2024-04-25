@@ -1,51 +1,151 @@
---판매가격이 20000원 이상인 도서의 도서번호,
---도서이름,고객이름,출판사,판매가격을 보여주는 highorders뷰를 생성
-drop view highorders1;
-select b.bookname, c.name, b.publisher,o.saleprice
-from book b, customer c, orders o
-where o.saleprice >=20000;
+-- 극장 테이블
+create table theater(
+    ttid number primary key,
+    ttname varchar2(30),
+    ttlocation varchar2(30)
+);
+create table cinema(
+    ttid number,
+    cid number, --상영관 번호
+    moviename varchar2(40),
+    movieprice number check(movieprice<20000),
+    chairnumber number,
+    primary key (ttid,cid)
+);
+select *from cinema;
+--예약 테이블
+create table reservation(
+    ttid number,
+    cid number check(cid>=1) check(cid<=10),
+    cusid number,
+    seatnumber number unique,
+    rdate date,
+    primary key(ttid,cid,cusid)
+);
+create table movie_customer(
+    cusid number primary key,
+    cusname varchar2(50),
+    cusaddr varchar2(300)
+);
 
-create view highorders(bookname,name,publisher,saleprice) as
-(select b.bookname, c.name, b.publisher,o.saleprice
-from book b, customer c, orders o
-where o.saleprice >=20000);
+--고객 데이터
+insert into movie_customer values(3,'홍길동','강남');
+insert into movie_customer values(4,'김철수','잠실');
+insert into movie_customer values(9,'박영희','강남');
 
 
---생성한 뷰를 이용하여 판매된 도서의 이름과 고객의 이름을 출력하는
--- sql문을 작성
-select bookname,name
-from highorders;
+create table sales_person(
+    name varchar2(100) primary key,
+    age number,
+    salary number
+);
 
---highorders뷰를 변경하고자 한다. 판매가격 속성을 삭제하는 명령을 수행하시오
---삭제후 2번 sql문을 다시 수행
-drop view highorders;
---팀장이 없는 직원의 이름을 보이시오
-select ename
-from emp
-where mgr is null;
---사원의 이름과 부서의 이름을 보이시오(조인/스칼라 부속질의 사용)
-select e.ename,d.dname from dept d ,emp e where d.deptno=e.deptno; 
+-- 고객 테이블 생성
+create table sales_customer(
+    name varchar2(50) primary key,
+    city varchar2(50),
+    industrytype varchar2(50)
+);
 
-select ename, (select dname from dept d where e.deptno=d.deptno)
-from emp e;
---chicago에 근무하는 사원의 이름을 보이시오(조인/인라인 뷰/중첩질의/exists사용)
---조인
-select e.ename from emp e,dept d
-where e.deptno= d.deptno and loc like 'chicago';
---인라인 뷰
-create view vw_emp as(select e.ename, d.loc from emp e, dept d 
-where  e.deptno=d.deptno);
-select *from vw_emp where loc like 'chicago';
---중첩질의
-select ename
-from emp e
-where e.deptno =(select deptno from dept where loc like'chicago');
---exists
-select ename
-from emp where exists (select*from dept where loc like 'chicago'
-and emp.deptno=dept.deptno);
 
---자기 부서의 평균보다 급여가 많은 직원의 이름을 보이시오(상관 부속질의 사용)
-select ename
-from emp e 
-where e.sal >(select avg(sal) from emp e1 where e.deptno=e1.deptno)
+select address
+from customer where custid=5;
+
+update customer set address='대한민국 부산' where custid=5;
+
+select address from customer where name like '김연아';
+
+-- 극장 데이터
+insert into theater values(1,'롯데','잠실');
+insert into theater values(2,'메가','강남');
+insert into theater values(3,'대한','잠실');
+select * from theater;
+
+-- 상영관 데이터
+drop table cinema;
+insert into cinema values(1,1,'어려운 영화',15000,48);
+insert into cinema values(3,1,'멋진 영화',7500,120);
+insert into cinema values(3,2,'재밌는 영화',8000,110);
+select * from cinema;
+
+drop table reservation;
+
+
+-- 예약 데이터
+insert into reservation values(3,2,3,15,'2020-09-01');
+insert into reservation values(3,1,4,16,'2020-09-01');
+insert into reservation values(1,1,9,48,'2020-09-01');
+delete reservation;
+select * from reservation;
+
+--모든 극장의 이름과 위치를 보이시오
+select ttname,ttlocation
+from theater;
+--잠실에 있는 극장을 보이시오
+select ttname from theater
+where ttlocation= '잠실';
+--잠실에 사는 고객의 이름을 오름차순으로 보이시오
+ select cusname from  movie_customer
+ where cusaddr like '잠실'
+ order by cusname; 
+--가격이 8000원 이하인 영화의 극장번호,상영관번호,영화제목을 보이시오
+select cid,ttid,moviename
+from cinema
+where movieprice <=8000;
+--극장위치와 고객의 주소가 같은 고객들을 보이시오
+select cusname,ttlocation
+from movie_customer mc, theater t
+where mc.cusaddr=t.ttlocation;
+
+--극장의 수는 몇개인가
+select count(*)
+from theater;
+--상영되는 영화의 평균 가격은 얼마인가
+select avg(movieprice)
+from cinema;
+--2020년 9월1일에 영화를 관람한 고객의 수는 얼마인가
+select count(*)
+from reservation
+where rdate='20200901';
+--대한 극장에서 상영된 영화제목을 보이시오
+select moviename
+from cinema
+where ttid =(
+select ttid from theater where ttname ='대한');
+
+
+--대한 극장에서 영화를 본 고객의 이름을 보이시오
+select cusname
+from movie_customer mc,theater t,reservation r
+where t.ttid= r.ttid and r.cusid=mc.cusid
+and t.ttname ='대한';
+
+--대한극장의 전체 수입을 보이시오
+select sum(movieprice)
+from cinema
+where ttid=(select ttid from theater where ttname='대한');
+
+select sum(c.movieprice)
+from cinema c
+where c.ttid in(
+select r.ttid
+from theater t ,reservation r
+where t.ttid=r.ttid
+and t.ttname like '대한');
+
+--극장별 상영관 수를 보이시오
+select ttid 상영관 , count(*) 개수
+from cinema
+group by ttid;
+
+--잠실에 있는 극장의 상영관을 보이시오
+select *
+from cinema c, theater t
+where c.ttid= t.ttid and t.ttlocation= '잠실';
+--2020년 9월 1일에 극장별 관람 고객의 수를 보이시오
+select count(*)
+from reservation
+where rdate='20200901';
+
+--2020년 9월 1일에 가장 많은 고객이 관람한 영화를 보이시오
+select *from reservation;
