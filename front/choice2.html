@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <style>
+        table {
+            margin-left: 135PX;
+            margin-top: 5px;
+            border:1px solid black;
+            margin-left: 120px;
+        }
+        .adopt {
+            margin: auto;
+            width: 800px;
+            height: 900px;
+           border: 1px solid black;
+        }
+
+        #content {
+            width: 730px;
+            height: 500px;
+            background-color: rgb(208, 220, 222);
+            margin: 40px;
+            text-align: center;
+            /* padding: 10px; */
+        }
+        th {
+            border-collapse: separate;
+            height: 50px;
+            background-color: rgb(214, 240, 240);
+        }
+        th {
+            border: 1px solid;
+            border-collapse: separate;
+            height: 50px;
+            
+        }
+        td {
+            width: 400px;
+            text-align: center;
+        }
+
+       /* input {
+            width: 400px;
+            height: 45px;
+            text-align: center;
+            outline: none;
+       } */
+
+       input[type="text"],input[type="date"],input[type="email"] {
+            width: 400px;
+            height: 45px;
+            text-align: center;
+            outline: none;
+       }
+       .click {
+        margin-left: 350px;
+        margin-top: 20px;
+        background-color: rgb(210, 238, 238);
+       }
+
+       #adoptList {
+           margin: auto;
+           width: 870px;
+           text-align: center;   
+           border: 1px solid;
+           margin-top: 30px;
+       }
+
+       #adoptList th, #adoptList td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        h3{
+            text-align: center;
+        }
+
+
+         .comment-box {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .comment-section {
+            margin-top: 20px;
+        }
+        .comment, .reply {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .comment-author {
+            font-weight: bold;
+        }
+        .reply {
+            margin-left: 20px;
+        }
+        .reply-box {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        .reply-btn {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="adopt">
+        <div id="content">
+            <h2>입양 전 주의사항</h2>
+            1. 입양 전 모든 가족 구성원이 동의했나요?<br>
+외로움을 달래 줄 인형이나 관상용이 아닌, ‘반려‘ 동물입니다.<br>
+2. 개와 고양이의 수명은 최소 10년 이상입니다.<br>
+10년 넘도록 잘 돌보아 줄 수 있나요? 10년 후 당신은 무엇을 하고 있을까요?<br>
+3. 동물들도 사람과 같이 유전적 또는 외부 질병, 사고에 노출될 수 있습니다.<br>
+정기검진과 예방접종, 필요하다면 치료도 해주어야 합니다. 
+비용이 굉장히 많이 들 수도 있습니다.<br>
+4. 동물의 소음, 냄새(용변 등), 문제행동 등의 상황도 생각 해 보셨나요?<br>
+짖거나, 물거나, 대소변을 못 가릴 수도 있고, 아파트나 다세대 주택 등 가구 밀집 지역에 
+거주하는 경우 주위 이웃들과 마찰이 빚어질 수도 있습니다.<br>
+5. 입소 동물에게 여러명의 입양 희망 신청자가 생길 경우
+센터 관리자들이 회의를 거쳐 입양인을 선정하게 됩니다. 
+선택이 안되더라도 양해해 주시기 바랍니다.<br>
+6. 입소 동물의 진료 항목 및 건강상태
+센터에 입소한 동물들은 유기 또는 유실되어 동물 보호소에 머무르며 
+공고 후에 공고기간이 만료된 동물 중 건강상태, 행동 등을 고려하여 선발된 개체들입니다. <br>
+1차로 동물병원을 통해 간단한 진료 및 중성화 수술, 백신접종 등을 실시하지만, 
+잠재되어있는 질병이 발현되지 않을 경우 감염 여부를 확인할 수 없습니다. 
+이를 인지하시고 입양을 진행하시기 바랍니다.<br><br>
+7. 입양(분양) 후 파양 불가<br>
+입양 후 파양은 원칙적으로 불가입니다. 신중히 결정해 주십시오.        </div>
+        
+            <form id="adoptForm">
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <td><input type="text" id="name" placeholder="이름 기입"></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td><input type="email" id="email" placeholder="이메일 주소 정확히 기입" required></td>
+                    </tr>
+                    <tr>
+                        <th>입양 가능 날짜</th>
+                        <td><input type="date" id="adoptDate"></td>
+                    </tr>
+                    <tr>
+                        <th>공고 번호</th>
+                        <td><input type="text" id="time" placeholder="-같이 기입"></td>
+                    </tr>
+                </table>
+                <input type="submit" value="입양 신청" class="click"><br>
+                <h3>(댓글로 입양 여부 확인 후 신청서 작성 부탁드립니다.)</h3>
+            </form>
+        </div>
+    </div>    
+    <h1>입양 문의</h1>
+    <div>
+        <textarea id="commentInput" class="comment-box" rows="4" placeholder="댓글을 입력하세요..."></textarea>
+        <br>
+        <button id="submitComment">댓글 추가</button>
+    </div>
+    <div id="commentSection" class="comment-section">
+        <h2>댓글</h2>
+        <!-- 댓글이 여기에 추가됩니다 -->
+    </div>
+    <script>
+         const commentInput = document.getElementById('commentInput');
+        const submitComment = document.getElementById('submitComment');
+        const commentSection = document.getElementById('commentSection');
+
+        submitComment.addEventListener('click', () => {
+            const commentText = commentInput.value.trim();
+            if (commentText === '') {
+                alert('댓글을 입력하세요.');
+                return;
+            }
+
+            // 새로운 댓글 요소 생성
+            const newComment = document.createElement('div');
+            newComment.classList.add('comment');
+            newComment.innerHTML = `
+                <div class="comment-author">익명</div>
+                <div class="comment-text">${commentText}</div>
+                <button class="reply-btn">답변</button>
+                <div class="replies"></div>
+            `;
+
+            // 대댓글 추가 버튼에 이벤트 리스너 추가
+            newComment.querySelector('.reply-btn').addEventListener('click', () => {
+                const replyBox = document.createElement('div');
+                replyBox.classList.add('reply-box');
+                replyBox.innerHTML = `
+                    <textarea class="reply-input" rows="2" placeholder="대댓글을 입력하세요..."></textarea>
+                    <br>
+                    <button class="submit-reply">대댓글 추가</button>
+                `;
+                newComment.appendChild(replyBox);
+
+                replyBox.querySelector('.submit-reply').addEventListener('click', () => {
+                    const replyText = replyBox.querySelector('.reply-input').value.trim();
+                    if (replyText === '') {
+                        alert('대댓글을 입력하세요.');
+                        return;
+                    }
+
+                    // 새로운 대댓글 요소 생성
+                    const newReply = document.createElement('div');
+                    newReply.classList.add('reply');
+                    newReply.innerHTML = `
+                        <div class="comment-author">익명</div>
+                        <div class="comment-text">${replyText}</div>
+                    `;
+
+                    // 대댓글을 대댓글 섹션에 추가
+                    newComment.querySelector('.replies').appendChild(newReply);
+
+                    // 입력 필드 제거
+                    replyBox.remove();
+                });
+            });
+
+            // 새로운 댓글을 댓글 섹션에 추가
+            commentSection.appendChild(newComment);
+
+            // 입력 필드 초기화
+            commentInput.value = '';
+        });
+    </script>
+    
+</body>
+</html>

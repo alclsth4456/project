@@ -1,0 +1,120 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex; 
+  align-items: center;
+  flex-direction: column;
+  overflow-x: auto; 
+  
+  /* background-color: rgb(247, 223, 248); */
+}
+
+#container{
+  margin: 10px;
+  max-width: 1000px;
+  width: 100%;
+  text-align: left;
+    
+}
+
+h1{
+margin:auto;
+height: 50px;
+text-align: center;
+max-width: 1000px;
+  width: 100%;
+  background-color: rgb(210, 238, 238);
+color: white;
+
+}
+header{
+  margin: auto;
+  background-color: rgb(210, 238, 238);
+
+}
+
+#photo {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  
+}  
+
+#photo img {
+  width: 100%;
+  height: auto;
+  max-width: 1000px;
+  display: block;
+  margin: 0 auto;
+ 
+}
+
+
+#text{
+  color: white;
+  position: absolute;
+  top: 310px; 
+  right: 50%;
+}
+li{
+list-style-type: none;
+margin-top: 5px;
+margin: 20px;
+display: inline;
+text-decoration-color: rgb(81, 50, 50);
+}
+
+
+.content {
+  margin: auto;
+  overflow-x: auto; /* 가로 스크롤 허용 */
+  white-space: nowrap; /* 모든 항목이 한 줄에 표시되도록 함 */
+  max-width: 1000px;
+  background-color: rgb(210, 238, 238);
+  display: flex;
+  justify-content: center;
+  /* text-align: center; */
+  
+}
+
+.content a {
+  color: white;
+}
+a {
+
+  color: black;
+margin-top: -5px;
+text-decoration-line: none;
+
+}
+
+h3{
+  margin-left: 50px;
+}
+
+#main-foot {
+  width: 90%;
+    text-align: center;
+    margin: 70px ;
+}
+.main-img {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.main-img img{
+  margin-right: 5px;
+  max-width: 200px;
+  height: 300px;
+  display: inline-block;
+
+}
+p {
+  color: rgb(105, 45, 92);
+  vertical-align: bottom;
+  
+
+}

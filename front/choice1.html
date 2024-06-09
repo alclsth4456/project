@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <style>
+        table {
+            margin-left: 135PX;
+            margin-top: 5px;
+            border:1px solid black;
+            margin-left: 120px;
+        }
+        .volunteer {
+            margin: auto;
+            width: 800px;
+            height: 700px;
+            border: 1px solid black;
+        }
+
+        #content {
+            width: 700px;
+            height: 300px;
+            background-color: rgb(208, 220, 222);
+            margin: 40px;
+            text-align: center;
+        }
+        th {
+            border: 1px solid;
+            border-collapse: separate;
+            height: 50px;
+            background-color: rgb(214, 240, 240);
+        }
+        table {
+            border: 1px solid;
+            /* border-collapse: separate; */
+            height: 50px;
+            
+        }
+        td {
+            width: 400px;
+            text-align: center;
+        }
+
+       /* input {
+            width: 400px;
+            height: 45px;
+            text-align: center;
+            outline: none;
+       } */
+
+       input[type="text"],input[type="date"],input[type="email"] {
+            width: 400px;
+            height: 45px;
+            text-align: center;
+            outline: none;
+       }
+       .click {
+        margin-left: 350px;
+        margin-top: 20px;
+        background-color: rgb(210, 238, 238);
+       }
+
+       #volunteerList {
+        margin-top: 20px;
+        margin: auto;
+        width: 870px;
+        text-align: center;   
+        border: 1x solid;
+       }
+
+       .list {
+        margin: auto;
+       }
+
+       #content2 {
+        width: 700px;
+        height: 300px;
+        background-color: rgb(210, 238, 238);
+        margin-left: 50px;
+        margin-bottom: 40px;
+        text-align: center;
+       }
+
+       #volunteerList th, #volunteerList td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+       
+    </style>
+</head>
+<body>
+
+   <div class="container">
+    <ul>
+        <div class="volunteer">
+
+            <div id="content2">
+                <h2>봉사 안내</h2>
+               <p>유기동물보호소 봉사활동 준비물
+                부산동물보호센터 같은 경우는 개인으로 갔을 때 보호소에 방수 앞치마, 방수 장화가 있어 고무장갑만 따로 사서 가면 됩니다.
+                
+                만약 단체로 봉사활동을 간다고 하면 단체에서 방수 앞치마, 방수 장화, 고무장갑을 사서 보호센터 물품 보관소에 배치해서 써야 됩니다. (물품보관소 공간이 협소하여 자리가 없을 경우가 높음)
+                
+                다른 유기동물보호소를 간다면 고무장갑, 일회용 우비를 챙겨 가시는걸 추천드립니다.
+                <h4>신청했다가 개인 사정으로 못오시는 경우 반드시 그전날에 꼭 연락을 주시기 바랍니다.</h4>
+  
+                </p> 
+              </div>
+            <form id="volunteerForm">
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <td><input type="text" id="name" placeholder="이름 기입" required></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td><input type="email" id="email" placeholder="email@email.com" required></td>
+                    </tr>
+                    <tr>
+                        <th>봉사 가능 날짜</th>
+                        <td><input type="date" id="volunteerDate" required></td>
+                    </tr>
+                    <tr>
+                        <th>구체적인 시간</th>
+                        <td><input type="text" id="time" placeholder="9시-18시" required></td>
+                    </tr>
+                </table>
+                <input type="submit" value="신청하기" class="click">
+            </form>
+        </div>
+    </ul>
+    <table id="volunteerList">
+        <thead class="list">
+            <tr>
+                <th>성함</th>
+                <th>이메일</th>
+                <th>봉사 가능 날짜</th>
+                <th>구체적인 시간</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+    <script>
+        //이름 마스킹 함수
+function maskName(name) {
+                if(name.length===1) {
+                    return name;
+                }else if(name.length===2) {
+                    return name.slice(0,1) + '*';
+                }else {                                                                                                                                                                                                                                                 
+                    return name.slice(0,1) +'*'.repeat(name.length-2)+ name.slice(-1);
+                }
+            }
+           
+
+        // 로컬 스토리지에서 데이터 가져오기
+        function loadVolunteers() {
+            const volunteers = JSON.parse(localStorage.getItem('volunteers')) || [];
+            volunteers.forEach(volunteer => addVolunteerToTable(volunteer));
+        }
+
+        // 테이블에 봉사자 추가
+        function addVolunteerToTable(volunteer) {
+            const newRow = document.createElement('tr');
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = volunteer.name;
+            const emailCell = document.createElement('td');
+            emailCell.textContent = volunteer.email;
+            const dateCell = document.createElement('td');
+            dateCell.textContent = volunteer.date;
+            const timeCell = document.createElement('td');
+            timeCell.textContent = volunteer.time;
+
+            newRow.appendChild(nameCell);
+            newRow.appendChild(emailCell);
+            newRow.appendChild(dateCell);
+            newRow.appendChild(timeCell);
+
+            document.querySelector('#volunteerList tbody').appendChild(newRow);
+        }
+
+        // 폼 제출 처리
+        document.getElementById('volunteerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 폼 제출 막기
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const date = document.getElementById('volunteerDate').value;
+            const time = document.getElementById('time').value;
+
+
+           const maskeName=maskName(name)
+            const volunteer = {name:maskeName, email, date, time };
+
+            addVolunteerToTable(volunteer);
+
+            // 로컬 스토리지에 저장
+            const volunteers = JSON.parse(localStorage.getItem('volunteers')) || [];
+            volunteers.push(volunteer);
+            localStorage.setItem('volunteers', JSON.stringify(volunteers));
+
+            document.getElementById('volunteerForm').reset();
+        });
+
+        // 페이지 로드 시 로컬 스토리지에서 데이터 로드
+        window.onload = loadVolunteers;
+    </script>
+    
+</body>
+</html>

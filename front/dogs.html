@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dogs.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="container" >
+        <header>
+            <h1>우리 반려견, 사지말고 입양하세요</h1>
+              <div id="photo" >
+                  <img src="img/girl-5623231_640.jpg" >
+              </div>    
+           
+           
+            
+          <div class="content">
+              <h3 id="text">좋은 가정에 입양갈때까지 사랑할거냥♥</h3>
+          <!-- <ul>   
+          <li><a href="intro.html">카페 소개</a></li>
+          <li><a href="choice1.html">봉사 활동</a></li>
+          <li><a href="choice2.html">입양 신청서</a></li>
+          <li><a href="map.html">오시는 길</a></li>
+          </ul> -->
+          </div>
+      </header>
+     
+      
+      </div>
+
+    <div id="imgs">
+        
+        <a href="dog1.html"><div class="dogs" id="dog1"></div></a>
+        <a href="dog2.html"> <div class="dogs" id="dog2"></div></a>
+        <a href="dog3.html"><div class="dogs" id="dog3"></div></a>
+        <a href="dog4.html"><div class="dogs" id="dog4"></div></a>
+        <a href="dog5.html"><div class="dogs" id="dog5"></div></a>
+        <a href="dog6.html"><div class="dogs" id="dog6"></div></a>
+        <a href="dog7.html"><div class="dogs" id="dog7"></div></a>
+        <a href="dog8.html"><div class="dogs" id="dog8"></div></a>
+        <a href="dog9.html"><div class="dogs" id="dog9"></div></a>
+        <a href="dog10.html"><div class="dogs" id="dog10"></div></a>
+        
+        <div class="dogs" id="dog11"></div>
+        <div class="dogs" id="dog12"></div>
+        <div class="dogs" id="dog13"></div>
+    </div>
+    <div id="pagination" class="pagination">
+        <button id="prev">이전</button>
+        <span id="pageNumbers"></span>
+        <button id="next">다음</button>
+    </div>
+
+    <script>
+        // JavaScript 코드
+       const dogs = document.querySelectorAll('.dogs');
+        const itemsPerPage = 10; // 페이지당 항목 수
+        let currentPage = 1;
+        const totalPages = Math.ceil(dogs.length / itemsPerPage);
+        const maxPageButtons = 5;
+        let startPage = 1;
+
+        function showPage(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = page * itemsPerPage;
+
+            dogs.forEach((dog, index) => {
+                dog.style.display = (index >= start && index < end) ? 'block' : 'none';
+            });
+
+            document.querySelectorAll('#pageNumbers button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById(`page${page}`).classList.add('active');
+        }
+
+        function createPagination() {
+            const pageNumbers = document.getElementById('pageNumbers');
+            pageNumbers.innerHTML = '';
+            const endPage = Math.min(startPage + maxPageButtons - 1, totalPages);
+            for (let i = startPage; i <= endPage; i++) {
+                const button = document.createElement('button');
+                button.id = `page${i}`;
+                button.textContent = i;
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updateButtons();
+                });
+                pageNumbers.appendChild(button);
+            }
+        }
+
+        function updateButtons() {
+            document.getElementById('prev').disabled = startPage === 1;
+            document.getElementById('next').disabled = startPage + maxPageButtons > totalPages;
+        }
+
+        document.getElementById('prev').addEventListener('click', () => {
+            if (startPage > 1) {
+                startPage = Math.max(startPage - maxPageButtons, 1);
+                createPagination();
+                showPage(currentPage);
+                updateButtons();
+            }
+        });
+
+        document.getElementById('next').addEventListener('click', () => {
+            if (startPage + maxPageButtons <= totalPages) {
+                startPage = Math.min(startPage + maxPageButtons, totalPages - maxPageButtons + 1);
+                createPagination();
+                showPage(currentPage);
+                updateButtons();
+            }
+        });
+
+        // 초기 설정
+        createPagination();
+        showPage(currentPage);
+        updateButtons();
+    </script>
+</body>
+</html>
